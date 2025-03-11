@@ -21,9 +21,10 @@ const app = express()
 app.disable('x-powered-by')
 
 app.use(express.json())
-app.use(cors({
+/* app.use(cors({
   origin: 'http://localhost:8080'
-})) // Middleware de CORS. Para evitar agregar cabeceras a cada endpoint, se puede usar un middleware
+})) */ // Middleware de CORS. Para evitar agregar cabeceras a cada endpoint, se puede usar un middleware
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hello World' })
