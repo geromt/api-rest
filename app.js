@@ -1,6 +1,6 @@
 const express = require('express')
 const moviesJson = require('./movies.json')
-const { validateMovie } = require('./schemas/movies')
+const { validateMovie, validatePartialMovie } = require('./schemas/movies')
 
 // REST es una arquitectura de software se basa en:
 // - Simplicidad
@@ -65,6 +65,25 @@ app.post('/movies', (req, res) => {
 
   moviesJson.push(newMovie)
   res.status(201).json(newMovie)
+})
+
+app.patch('/movies/:id', (req, res) => {
+  const { id } = req.params
+  const result = validatePartialMovie(req.body)
+  if (!result.success) {
+    return res.status(400).json({ errors: result.error })
+  }
+
+  const movieIndex = moviesJson.findIndex(movie => movie.id === id)
+  if (movieIndex < 0) return res.status(404).json({ message: 'Movie not found' })
+
+  const updateMovie = {
+    ...moviesJson[movieIndex],
+    ...req.body
+  }
+  moviesJson[movieIndex] = updateMovie
+
+  res.status(200).json(updateMovie)
 })
 
 app.use((req, res) => {

@@ -6,7 +6,7 @@ GET http://localhost:3000/movies/c8a7d63f-3b04-44d3-9d95-8782fd7dcfaf
 ### Películas por género
 GET http://localhost:3000/movies?genre=action
 
-### Crear película con POST
+### Crear película con POST. POST crea un nuevo recurso en el servidor
 POST http://localhost:3000/movies
 Content-Type: application/json
 
@@ -32,3 +32,13 @@ Content-Type: application/json
     "poster": "https://www.imdb.com/title/tt0133093/mediaviewer/rm4261028352",
     "genre": ["Action", "Sci-Fi"]
 }
+
+### Actualizar un película con PATCH. Actualiza parcialmente (campos en concreto) un recurso en el servidor
+PATCH http://localhost:3000/movies/c8a7d63f-3b04-44d3-9d95-8782fd7dcfaf
+Content-Type: application/json
+
+{
+    "rate": 8.7
+}
+
+### Actualizar una película con PUT. Actualiza completamente un recurso en el servidor

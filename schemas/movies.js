@@ -17,4 +17,8 @@ function validateMovie (movie) {
   return movieSchema.safeParse(movie) // Devuelve un objeto result que dice si es válido o no
 }
 
-module.exports = { validateMovie }
+function validatePartialMovie (movie) {
+  return movieSchema.partial().safeParse(movie) // Todas las propiedades del schema son opcionales
+}
+
+module.exports = { validateMovie, validatePartialMovie }
