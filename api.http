@@ -6,3 +6,29 @@ GET http://localhost:3000/movies/c8a7d63f-3b04-44d3-9d95-8782fd7dcfaf
 ### Películas por género
 GET http://localhost:3000/movies?genre=action
 
+### Crear película con POST
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "title": "The Matrix",
+    "year": 1999,
+    "director": "Lana Wachowski",
+    "duration": 136,
+    "poster": "https://www.imdb.com/title/tt0133093/mediaviewer/rm4261028352",
+    "rate": 8.7,
+    "genre": ["Action", "Sci-Fi"]
+}
+
+### Crear película con POST sin rate
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "title": "The Matrix",
+    "year": 1999,
+    "director": "Lana Wachowski",
+    "duration": 136,
+    "poster": "https://www.imdb.com/title/tt0133093/mediaviewer/rm4261028352",
+    "genre": ["Action", "Sci-Fi"]
+}
