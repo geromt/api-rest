@@ -1,6 +1,7 @@
 const express = require('express')
 const moviesJson = require('./movies.json')
 const { validateMovie, validatePartialMovie } = require('./schemas/movies')
+const cors = require('cors')
 
 // REST es una arquitectura de software se basa en:
 // - Simplicidad
@@ -20,6 +21,9 @@ const app = express()
 app.disable('x-powered-by')
 
 app.use(express.json())
+app.use(cors({
+  origin: 'http://localhost:8080'
+})) // Middleware de CORS. Para evitar agregar cabeceras a cada endpoint, se puede usar un middleware
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hello World' })
@@ -84,6 +88,24 @@ app.patch('/movies/:id', (req, res) => {
   moviesJson[movieIndex] = updateMovie
 
   res.status(200).json(updateMovie)
+})
+
+app.delete('/movies/:id', (req, res) => {
+  // res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  const { id } = req.params
+  const movieIndex = moviesJson.findIndex(movie => movie.id === id)
+  if (movieIndex < 0) return res.status(404).json({ message: 'Movie not found' })
+
+  moviesJson.splice(movieIndex, 1)
+  res.status(204).end()
+})
+
+// Para los métodos complejos, como PUT, PATCH o DELETE, antes se manda una petición OPTIONS que también debe
+// responder con los headers de CORS
+app.options('/movies/:id', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+  res.status(200).end()
 })
 
 app.use((req, res) => {
