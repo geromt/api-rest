@@ -1,4 +1,4 @@
-const zod = require('zod')
+import zod from 'zod'
 
 const movieSchema = zod.object({
   title: zod.string({
@@ -13,12 +13,12 @@ const movieSchema = zod.object({
   genre: zod.array(zod.enum(['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Mystery', 'Sci-Fi', 'Thriller', 'Western'])).min(1)
 })
 
-function validateMovie (movie) {
+export function validateMovie (movie) {
   return movieSchema.safeParse(movie) // Devuelve un objeto result que dice si es válido o no
 }
 
-function validatePartialMovie (movie) {
+export function validatePartialMovie (movie) {
   return movieSchema.partial().safeParse(movie) // Todas las propiedades del schema son opcionales
 }
 
-module.exports = { validateMovie, validatePartialMovie }
+// module.exports = { validateMovie, validatePartialMovie }

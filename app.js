@@ -1,7 +1,11 @@
-const express = require('express')
+import express, { json } from 'express'
+// import moviesJson from './movies.json' with { type: 'json' } // Importamos el archivo JSON que no sirve al a fecha
+import { validateMovie, validatePartialMovie } from './schemas/movies.js'
+import cors from 'cors'
+
+import { createRequire } from 'node:module'
+const require = createRequire(import.meta.url)
 const moviesJson = require('./movies.json')
-const { validateMovie, validatePartialMovie } = require('./schemas/movies')
-const cors = require('cors')
 
 // REST es una arquitectura de software se basa en:
 // - Simplicidad
@@ -20,7 +24,7 @@ const cors = require('cors')
 const app = express()
 app.disable('x-powered-by')
 
-app.use(express.json())
+app.use(json())
 /* app.use(cors({
   origin: 'http://localhost:8080'
 })) */ // Middleware de CORS. Para evitar agregar cabeceras a cada endpoint, se puede usar un middleware
