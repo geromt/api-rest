@@ -1,17 +1,17 @@
 GET http://localhost:3000/movies
 
 ### Película por ID
-GET http://localhost:3000/movies/c8a7d63f-3b04-44d3-9d95-8782fd7dcfaf
+GET http://localhost:3000/movies/07E3FD5AB60FF4AE292B69597F0308D1
 
 ### Películas por género
-GET http://localhost:3000/movies?genre=action
+GET http://localhost:3000/movies?genre=sci-fi
 
 ### Crear película con POST. POST crea un nuevo recurso en el servidor
 POST http://localhost:3000/movies
 Content-Type: application/json
 
 {
-    "title": "The Matrix",
+    "title": "The MatOrix",
     "year": 1999,
     "director": "Lana Wachowski",
     "duration": 136,
@@ -25,7 +25,7 @@ POST http://localhost:3000/movies
 Content-Type: application/json
 
 {
-    "title": "The Matrix",
+    "title": "The Matorix",
     "year": 1999,
     "director": "Lana Wachowski",
     "duration": 136,
