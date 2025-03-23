@@ -76,10 +76,21 @@ export class MovieModel {
   }
 
   static async delete ({ id }) {
-
+    await connection.query('DELETE FROM movie_genres WHERE HEX(movie_id) = ?;', [id])
+    const [deletedElem] = await connection.query('DELETE FROM movies WHERE HEX(id) = ?;', [id])
+    console.log(deletedElem)
+    return deletedElem
   }
 
   static async update ({ id, input }) {
-
+    const statementString = ['UPDATE movies SET']
+    Object.keys(input).forEach(key => {
+      statementString.push(`${key} = ?`)
+      statementString.push(',')
+    })
+    statementString.pop()
+    statementString.push('WHERE HEX(id) = ?;')
+    await connection.query(statementString.join(' '), Object.values(input).concat(id))
+    return await MovieModel.getById({ id })
   }
 }
