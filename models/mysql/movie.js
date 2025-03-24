@@ -11,7 +11,7 @@ const config = {
 const connection = await mysql.createConnection(config)
 
 export class MovieModel {
-  static async getAll ({ genre }) {
+  getAll = async ({ genre }) => {
     if (genre) {
       const lowerCaseGenre = genre.toLowerCase()
 
@@ -46,7 +46,7 @@ export class MovieModel {
     return movies
   }
 
-  static async getById ({ id }) {
+  getByI = async ({ id }) => {
     const [movie] = await connection.query(
       'SELECT title, year, director, duration, rate, HEX(id) id FROM movies WHERE HEX(id) = ?;',
       [id]
@@ -55,7 +55,7 @@ export class MovieModel {
     return movie
   }
 
-  static async create ({ input }) {
+  create = async ({ input }) => {
     const [rows] = await connection.query("SELECT UNHEX(REPLACE(UUID(), '-','')) as uuid")
     const uuid = rows[0].uuid
 
@@ -75,14 +75,14 @@ export class MovieModel {
     })
   }
 
-  static async delete ({ id }) {
+  delete = async ({ id }) => {
     await connection.query('DELETE FROM movie_genres WHERE HEX(movie_id) = ?;', [id])
     const [deletedElem] = await connection.query('DELETE FROM movies WHERE HEX(id) = ?;', [id])
     console.log(deletedElem)
     return deletedElem
   }
 
-  static async update ({ id, input }) {
+  update = async ({ id, input }) => {
     const statementString = ['UPDATE movies SET']
     Object.keys(input).forEach(key => {
       statementString.push(`${key} = ?`)
